@@ -4,7 +4,7 @@ loadingScene.preload = function() {
   console.log("Started Scene: Loading...");
 
   // Load all images here!
-  this.load.image('main_background', 'assets/grass_bg.jpg');
+  this.load.image('main_background', 'assets/grass.png');
 }
 
 loadingScene.create = function() {

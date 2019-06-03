@@ -12,17 +12,23 @@ let config = {
         }
     },
     scene: [loadingScene, homeScene, gameScene],
-    backgroundColor: '#000000'
+    backgroundColor: '#154A1E'
 };
 
 let game = new Phaser.Game(config);
 
 gameScene.create = function() {
+
+  // Map background set up
   this.background = this.add.sprite(0,0,'main_background');
   this.background.setOrigin(0,0);
-  //this.background.depth = -10;
   this.background.width = config.width;
   this.background.height = config.height;
+  this.background = this.add.sprite(600,0,'main_background');
+  this.background.setOrigin(0,0);
+  this.background.width = config.width;
+  this.background.height = config.height;
+
 };
 
 gameScene.update = function() {

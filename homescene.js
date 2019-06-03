@@ -20,6 +20,7 @@ homeScene.create = function() {
     background.width = config.width;
     background.height = config.height;
 
+
     // Game Title
     let titleText = this.add.text(gameWidth/2, 150, 'HOME PAGE', {
         font: '100px Impact',

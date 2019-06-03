@@ -34,12 +34,22 @@ gameScene.create = function() {
   this.player = new Player(this, 100, config.height - 100, cursors);
 
   // Making bush
-  this.small_bush = this.add.sprite(100, 60, 'bush');
-  this.small_bush.setScale(0.3);
+  this.maze = this.physics.add.staticGroup();
+  this.maze.create(100, 60, 'bush').setScale(0.3);
+  this.maze.create(600, 400, 'bush').setScale(0.3);
+  this.maze.create(100, 300, 'bush').setScale(0.3);
 
+  /*
+  this.small_bush = this.physics.add.sprite(100, 60, 'bush');
+  this.small_bush.setScale(0.3);
+  this.small_bush.setCollideWorldBounds(true);
+  this.allowGravity = false;
+  */
+
+  this.physics.add.collider(this.player, this.maze);
+  //this.physics.world.collideSpriteVsGroup(this.player, this.maze);
 };
 
 gameScene.update = function(time, delta) {
   this.player.update(time, delta);
-
 };

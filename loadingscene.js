@@ -6,3 +6,7 @@ loadingScene.preload = function() {
   // Load all images here!
   this.load.image('main_background', 'assets/grass_bg.jpg');
 }
+
+loadingScene.create = function() {
+    this.scene.start('Home');
+};

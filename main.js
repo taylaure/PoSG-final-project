@@ -11,7 +11,7 @@ let config = {
             debug: false
         }
     },
-    scene: [bootScene, loadingScene, homeScene, gameScene],
+    scene: [loadingScene, homeScene, gameScene],
     backgroundColor: '#000000'
 };
 

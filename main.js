@@ -119,8 +119,6 @@ function onHitBalloon () {
   }
 };
 
-function onHitHouse () {
-  if(bacteria_touched) {
-    this.scene.start('Wash');
-  }
+function create_message() {
+
 }

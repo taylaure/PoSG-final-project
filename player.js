@@ -1,6 +1,6 @@
 class Player extends Phaser.Physics.Arcade.Image {
     constructor (scene, x, y, cursorInput) {
-        super(scene, x, y, 'cat');
+        super(scene, x, y, 'main_character');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.setCollideWorldBounds(true);

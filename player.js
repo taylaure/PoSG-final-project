@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Image {
         this.setCollideWorldBounds(true);
         this.setScale(0.1);
         this.body.allowGravity = false;
-        this.setImmovable();
+        //this.setImmovable();
         //this.movementSpeed = 500;
         this.cursorInput = cursorInput;
     }
@@ -26,7 +26,7 @@ class Player extends Phaser.Physics.Arcade.Image {
         }
         else if (this.cursorInput.down.isDown)
         {
-          this.setVelocityY(160);
+            this.setVelocityY(160);
         }
         else
         {

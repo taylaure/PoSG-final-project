@@ -120,5 +120,5 @@ function onHitBalloon () {
 };
 
 function create_message() {
-  
+
 }

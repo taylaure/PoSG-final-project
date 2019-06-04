@@ -10,9 +10,12 @@ washScene.preload = function(){
   this.load.image('speech', 'assets/speech-bubble.png');
 
 
+
 };
 
 washScene.create = function(){
+
+
 
   let background = this.add.sprite(0,0, 'bath_background');
 
@@ -38,6 +41,10 @@ washScene.create = function(){
 
   hands.setScale(.2);
 
+  //let rect = this.add.container(525, 375, 100, 100);
+
+
+
 
   this.input.setDraggable(soap);
 
@@ -50,21 +57,7 @@ washScene.create = function(){
 
     });
 
-
-
-  let intro = this.add.text(500, 100, "Oh No! You've touched a bacteria! \nUse the following instructions to \nwash your hands.", {
-      font: '18px Arial',
-      fill: '#000000'
-  });
-
-  let line2 = "First, put your hands under the water \nfor 5 seconds"
-  let line3 = "Good Job! Now we need to clean using soap! \nDrag the soap on to your hand scrub them clean"
-  let text = textForward(7000,
-    intro, line2);
-
-  textForward(6000, text, line3);
-
-
+  gameIntro();
 
 
 
@@ -76,29 +69,46 @@ washScene.create = function(){
 
 washScene.update = function(time, delta){
 
+  let handsRect = this.hands.getBounds();
+
+  let contRect = this.soap.getBounds();
+
+  if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect)) {
+              gameIntro();
+          }
+
 
 
 };
 
-function textForward(time, text1, text2){
+function gameIntro(){
 
+  let intro = washScene.add.text(500, 100, "Oh No! You've touched a bacteria! \nUse the following instructions to \nwash your hands.", {
+      font: '18px Arial',
+      fill: '#000000'
+  });
 
   washScene.time.addEvent({
-  delay: time,
+  delay: 7000,
   callback: ()=>{
       // spawn a new apple
+    intro.destroy();
 
-      text1.destroy();
+    let line2 = washScene.add.text(500, 100, "First, use the sink to wet your hands!", {
+        font: '18px Arial',
+        fill: '#000000'
+    });
+      washScene.time.addEvent({
+      delay: 7000,
+      callback: ()=>{
+          // spawn a new apple
 
-      let nextText = washScene.add.text(500, 100, text2, {
-          font: '18px Arial',
-          fill: '#000000'
-      });
-
-      return nextText;
+        line2.destroy();
+      },
+      loop: false
+      })
   },
   loop: false
   })
-
 
 }

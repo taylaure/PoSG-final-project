@@ -7,6 +7,7 @@ washScene.preload = function(){
   this.load.image('sink', 'assets/sink2.png');
   this.load.image('bath_background', 'assets/bath_background.png');
   this.load.image('hands', 'assets/hands.png');
+  this.load.image('hit-box', 'assets/hit-box.png');
   this.load.image('speech', 'assets/speech-bubble.png');
 
 
@@ -37,18 +38,20 @@ washScene.create = function(){
   let soap = this.add.sprite(575, 375, 'soap').setInteractive();
   soap.setScale(.2);
 
-  let hands = this.add.sprite(0,600, 'hands').setInteractive();
+  this.hands = this.add.sprite(0,600, 'hands').setInteractive();
 
-  hands.setScale(.2);
+  this.hands.setScale(.2);
 
-  //let rect = this.add.container(525, 375, 100, 100);
+  this.hit_box = this.add.sprite(525,375, 'hit-box');
 
+  this.hit_box.setScale(.2);
 
+  this.hit_box.setAlpha(0);
 
 
   this.input.setDraggable(soap);
 
-  this.input.setDraggable(hands);
+  this.input.setDraggable(this.hands);
 
   this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 
@@ -71,11 +74,37 @@ washScene.update = function(time, delta){
 
   let handsRect = this.hands.getBounds();
 
-  let contRect = this.soap.getBounds();
+  let contRect = this.hit_box.getBounds();
 
   if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect)) {
-              gameIntro();
-          }
+
+    washScene.time.addEvent({
+    delay: 7000,
+    callback: ()=>{
+        // spawn a new apple
+
+        let text = washScene.add.text(500, 100, "Good Job! Now we must get some soap! \n Pick up the soap next to the sink and rub it on your hands!", {
+            font: '18px Arial',
+            fill: '#000000'
+        });
+
+        washScene.time.addEvent({
+        delay: 7000,
+        callback: ()=>{
+            // spawn a new apple
+
+          text.destroy();
+        },
+        loop: false
+        })
+
+    },
+    loop: false
+    })
+
+  }
+
+
 
 
 

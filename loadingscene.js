@@ -5,6 +5,7 @@ loadingScene.preload = function() {
 
   // Load all images here!
   this.load.image('main_background', 'assets/grass.png');
+  this.load.image('home_background', 'assets/forest.jpg');
   this.load.image('mountains', 'assets/mountains.png');
   this.load.image('start', 'assets/main_house.png');
   this.load.image('goal', 'assets/candy_house.png');
@@ -23,4 +24,5 @@ loadingScene.preload = function() {
 
 loadingScene.create = function() {
     this.scene.start('Home');
+    //this.scene.start('WashAnimation');
 };

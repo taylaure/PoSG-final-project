@@ -14,7 +14,7 @@ homeScene.create = function() {
     let gameWidth = this.sys.game.config.width;
     let gameHeight = this.sys.game.config.height;
 
-    let background = this.add.sprite(config.width/2,config.height/2,'main_background');
+    let background = this.add.sprite(config.width/2,config.height/2,'home_background');
     background.setScale(0.8);
     background.depth = -10;
     background.width = config.width;
@@ -22,8 +22,8 @@ homeScene.create = function() {
 
 
     // Game Title
-    let titleText = this.add.text(gameWidth/2, 150, 'HOME PAGE', {
-        font: '100px Impact',
+    let titleText = this.add.text(gameWidth/2, 150, 'BIRTHDAY SURPRISE', {
+        font: '80px Impact',
         fill: '#ffffff'
     });
     titleText.setOrigin(0.5, 0.5);
@@ -38,7 +38,7 @@ homeScene.create = function() {
     // make the text interactive and load game scene when clicked
     startText.setInteractive();
     startText.on('pointerdown', function(){
-        this.scene.start('Game');
+        this.scene.start('Wash');
     }, this);
     // create the start buttons background
     let textBg = this.add.graphics();

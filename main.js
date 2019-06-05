@@ -8,10 +8,10 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: true
+            debug: false
         }
     },
-    scene: [loadingScene, homeScene, gameScene, washScene],
+    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene],
     backgroundColor: '#154A1E'
 };
 
@@ -59,11 +59,12 @@ gameScene.create = function() {
   this.bac1.body.allowGravity = false;
   this.bac1.setImmovable();
   this.bac1.setScale(0.2);
-  this.bac1.setAlpha(1);
+  this.bac1.setAlpha(0);
 
   // Start and goal
   this.house = this.physics.add.sprite(80, 480, 'start');
   this.house.body.allowGravity = false;
+  this.house.body.setSize(100, 100);
   this.house.setImmovable();
   this.house.setScale(0.25);
   this.goal = this.add.sprite(700, 80, 'goal');
@@ -83,7 +84,7 @@ gameScene.create = function() {
 
   this.physics.add.collider(this.player, this.maze);
   this.physics.add.collider(this.player, this.balloon, onHitBalloon, null, this);
-  this.physics.add.collider(this.player, this.house);
+  this.physics.add.overlap(this.player, this.house, onHitHouse, null, this);
   this.physics.add.collider(this.player, this.bac1, onHitBacteria, null, this);
   //this.physics.add.collider(this.player, this.house, onHitHouse, null, this);
   //this.physics.world.collideSpriteVsGroup(this.player, this.maze);
@@ -138,18 +139,15 @@ function onHitBalloon () {
 };
 
 function onHitHouse () {
-  if(bacteria_touched && (home_count > 0)) {
-    this.scene.sleep('Game');
-    this.scene.start('Wash');
-  }
-  else {
-    home_count++;
+  if(bacteria_touched) {
+    this.scene.launch('WashAnimation');
+    this.scene.pause('Game');
   }
 };
 
 function onHitBacteria() {
   //this.scene.pause('Game');
-  if(bacteria_touched) {
+  if(!bacteria_touched) {
     if(this.msgBox) {
       return;
     }
@@ -195,7 +193,9 @@ function onHitBacteria() {
     back_button.on('pointerdown', function(){
         this.msgBox.destroy();
         this.msgBox = undefined;
-        //this.scene.resume('Game');
+        this.bac1.destroy();
+        this.bac1 = undefined;
+        bacteria_touched = true;
     }, this);
   }
   else {

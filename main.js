@@ -19,6 +19,7 @@ let game = new Phaser.Game(config);
 // Bacteria event
 let bacteria_touched = false;
 let home_count = 0;
+let balloon_touched = false;
 
 gameScene.create = function() {
 
@@ -127,6 +128,9 @@ function onHitBalloon () {
   }
   else {
     // Change to minigame scene later
+    balloon_touched = true;
+    this.balloon.destroy();
+    this.balloon = undefined;
     console.log('Minigame will start now');
     this.scene.launch('Wash');
     this.scene.pause();

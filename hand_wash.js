@@ -1,7 +1,7 @@
 let washScene = new Phaser.Scene('Wash');
 
 washScene.preload = function(){
-
+  console.log('preload: entered washing game');
   this.load.image('soap', 'assets/soap2.png');
   this.load.image('towel', 'assets/towel.png');
   this.load.image('sink', 'assets/sink2.png');
@@ -17,7 +17,7 @@ washScene.preload = function(){
 washScene.create = function(){
 
 
-
+  console.log('create: entered washing game');
   let background = this.add.sprite(0,0, 'bath_background');
 
   background.setScale(3.3);

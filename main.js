@@ -11,13 +11,14 @@ let config = {
             debug: true
         }
     },
-    scene: [loadingScene, homeScene, gameScene],
+    scene: [loadingScene, homeScene, gameScene, washScene],
     backgroundColor: '#154A1E'
 };
 
 let game = new Phaser.Game(config);
 // Bacteria event
-let bacteria_touched = true;
+let bacteria_touched = false;
+let home_count = 0;
 
 gameScene.create = function() {
 
@@ -51,6 +52,14 @@ gameScene.create = function() {
   // Trees near goal
   this.maze.create(550, 50, 'white_tree').setScale(0.2).refreshBody();
   this.maze.create(580, 70, 'white_tree').setScale(0.2).refreshBody();
+
+  // Bacteria
+  this.bac1 = this.physics.add.sprite(525,375, 'bac1');
+  this.bac1.body.allowGravity = false;
+  this.bac1.setImmovable();
+  this.bac1.setScale(0.2);
+  this.bac1.setAlpha(1);
+
   // Start and goal
   this.house = this.physics.add.sprite(80, 480, 'start');
   this.house.body.allowGravity = false;
@@ -73,7 +82,9 @@ gameScene.create = function() {
 
   this.physics.add.collider(this.player, this.maze);
   this.physics.add.collider(this.player, this.balloon, onHitBalloon, null, this);
-  this.physics.add.collider(this.player, this.house, onHitHouse, null, this);
+  this.physics.add.collider(this.player, this.house);
+  this.physics.add.collider(this.player, this.bac1, onHitBacteria, null, this);
+  //this.physics.add.collider(this.player, this.house, onHitHouse, null, this);
   //this.physics.world.collideSpriteVsGroup(this.player, this.maze);
 };
 
@@ -82,6 +93,7 @@ gameScene.update = function(time, delta) {
 };
 
 function onHitBalloon () {
+  //this.scene.pause('Game');
   if(bacteria_touched) {
     if(this.msgBox) {
       return;
@@ -110,15 +122,80 @@ function onHitBalloon () {
     back_button.on('pointerdown', function(){
         this.msgBox.destroy();
         this.msgBox = undefined;
+        //this.scene.resume('Game');
     }, this);
   }
   else {
     // Change to minigame scene later
     console.log('Minigame will start now');
-    //this.scene.start('Home');
+    this.scene.launch('Wash');
+    this.scene.pause();
   }
 };
 
-function create_message() {
+function onHitHouse () {
+  if(bacteria_touched && (home_count > 0)) {
+    this.scene.sleep('Game');
+    this.scene.start('Wash');
+  }
+  else {
+    home_count++;
+  }
+};
 
+function onHitBacteria() {
+  //this.scene.pause('Game');
+  if(bacteria_touched) {
+    if(this.msgBox) {
+      return;
+    }
+    console.log('Bacteria Event created');
+    // Creating a message box
+    this.msgBox = this.add.container(400, 300);
+    var back = this.add.sprite(0, 0, 'msgBox');
+    var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
+    var cat = this.add.sprite(270, -30, 'surprised_cat').setScale(0.2);
+    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+    let bac_type = this.add.text(-320, -100, 'Oh no! You’ve picked up a pasteurella bacterium from a stray cat!', {
+        font: '20px Lucida Sans Unicode',
+        fill: '#ffffff',
+        wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+    let instruction = this.add.text(-320, -50, 'You’d better go wash your hands so you don’t get sick!', {
+      font: '20px Lucida Sans Unicode',
+      fill: '#ffffff',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+    let info = this.add.text(-320, -10, 'An infection from this bacterium can cause meningitis and bone, joint, or respiratory infections.', {
+      font: '20px Lucida Sans Unicode',
+      fill: '#ffffff',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+
+    let danger = this.add.text(-320, 50, 'Danger level: LOW', {
+      font: '30px Impact',
+      fill: '#FF5554',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+
+
+    this.msgBox.add(back);
+    this.msgBox.add(cat);
+    this.msgBox.add(back_button);
+    this.msgBox.add(bac_type);
+    this.msgBox.add(instruction);
+    this.msgBox.add(info);
+    this.msgBox.add(danger);
+
+    back_button.setInteractive();
+    back_button.on('pointerdown', function(){
+        this.msgBox.destroy();
+        this.msgBox = undefined;
+        //this.scene.resume('Game');
+    }, this);
+  }
+  else {
+    // Change to minigame scene later
+    console.log('Minigame will start now');
+  }
 }

@@ -17,6 +17,8 @@ loadingScene.preload = function() {
   this.load.image('mushroom', 'assets/mushroom.png');
   this.load.image('msgBox', 'assets/msgBox.png');
   this.load.image('back_button', 'assets/back_button.png');
+  this.load.image('bac1', 'assets/bacteria1.png');
+  this.load.image('surprised_cat', 'assets/surprised_cat.png');
 }
 
 loadingScene.create = function() {

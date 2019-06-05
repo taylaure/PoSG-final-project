@@ -267,8 +267,8 @@ function finalPrompt(){
       back_button.setInteractive();
 
       back_button.on('pointerdown', function(){
-          washScene.scene.resume('Game');
-          washScene.scene.stop();
+          washScene.scene.start('Game');
+
       });
   },
   loop: false

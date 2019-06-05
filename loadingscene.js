@@ -20,6 +20,7 @@ loadingScene.preload = function() {
   this.load.image('back_button', 'assets/back_button.png');
   this.load.image('bac1', 'assets/bacteria1.png');
   this.load.image('surprised_cat', 'assets/surprised_cat.png');
+  this.load.audio('meow', 'assets/meow.wav');
 }
 
 loadingScene.create = function() {

@@ -141,6 +141,7 @@ function onHitBalloon () {
 function onHitHouse () {
   if(bacteria_touched) {
     this.scene.launch('WashAnimation');
+    bacteria_touched = false;
     this.scene.pause('Game');
   }
 };
@@ -152,6 +153,9 @@ function onHitBacteria() {
       return;
     }
     console.log('Bacteria Event created');
+
+    this.meowSound = this.sound.add('meow');
+    this.meowSound.play(); 
     // Creating a message box
     this.msgBox = this.add.container(400, 300);
     var back = this.add.sprite(0, 0, 'msgBox');

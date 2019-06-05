@@ -8,7 +8,7 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: false
+            debug: true
         }
     },
     scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene],
@@ -67,8 +67,10 @@ gameScene.create = function() {
   this.house.body.setSize(100, 100);
   this.house.setImmovable();
   this.house.setScale(0.25);
-  this.goal = this.add.sprite(700, 80, 'goal');
+  this.goal = this.physics.add.sprite(700, 80, 'goal');
   this.goal.setScale(0.2);
+  this.goal.body.allowGravity = false;
+  this.goal.setImmovable();
 
   // Mini games
   this.balloon = this.physics.add.sprite(100, 100, 'balloon');
@@ -85,6 +87,7 @@ gameScene.create = function() {
   this.physics.add.collider(this.player, this.maze);
   this.physics.add.collider(this.player, this.balloon, onHitBalloon, null, this);
   this.physics.add.overlap(this.player, this.house, onHitHouse, null, this);
+  this.physics.add.collider(this.player, this.goal, onHitGoal, null, this);
   this.physics.add.collider(this.player, this.bac1, onHitBacteria, null, this);
   //this.physics.add.collider(this.player, this.house, onHitHouse, null, this);
   //this.physics.world.collideSpriteVsGroup(this.player, this.maze);
@@ -101,6 +104,8 @@ function onHitBalloon () {
       return;
     }
     console.log('messageBox created');
+    goHomeMsg();
+    /*
     // Creating a message box
     this.msgBox = this.add.container(400, 300);
     var back = this.add.sprite(0, 0, 'msgBox');
@@ -126,15 +131,40 @@ function onHitBalloon () {
         this.msgBox = undefined;
         //this.scene.resume('Game');
     }, this);
+    */
   }
   else {
-    // Change to minigame scene later
     balloon_touched = true;
     this.balloon.destroy();
     this.balloon = undefined;
-    console.log('Minigame will start now');
-    this.scene.launch('Wash');
-    this.scene.pause();
+
+    if(this.msgBox) {
+      return;
+    }
+    console.log('messageBox created');
+    // Creating a message box
+    this.msgBox = this.add.container(400, 300);
+    var back = this.add.sprite(0, 0, 'msgBox');
+    var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
+    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+    let go_home_text1 = this.add.text(-320, -30, 'Hooray! You found the balloons!', {
+        font: '30px Impact',
+        fill: '#ffffff'
+    });
+    this.msgBox.add(back);
+    this.msgBox.add(back_button);
+    this.msgBox.add(go_home_text1);
+
+    back_button.setInteractive();
+    back_button.on('pointerdown', function(){
+        this.msgBox.destroy();
+        this.msgBox = undefined;
+        //this.scene.resume('Game');
+    }, this);
+
+    //console.log('Minigame will start now');
+    //this.scene.launch('Wash');
+    //this.scene.pause();
   }
 };
 
@@ -155,7 +185,7 @@ function onHitBacteria() {
     console.log('Bacteria Event created');
 
     this.meowSound = this.sound.add('meow');
-    this.meowSound.play(); 
+    this.meowSound.play();
     // Creating a message box
     this.msgBox = this.add.container(400, 300);
     var back = this.add.sprite(0, 0, 'msgBox');
@@ -206,4 +236,47 @@ function onHitBacteria() {
     // Change to minigame scene later
     console.log('Minigame will start now');
   }
-}
+};
+
+function onHitGoal() {
+  if(bacteria_touched) {
+    if(bacteria_touched) {
+      if(this.msgBox) {
+        return;
+      }
+      console.log('messageBox created');
+      goHomeMsg();
+    }
+  }
+  else if(!balloon_touched) {
+    console.log('You have not find all the presents for your friend yet!');
+  }
+};
+
+function goHomeMsg() {
+  // Creating a message box
+  gameScene.msgBox = gameScene.add.container(400, 300);
+  var back = gameScene.add.sprite(0, 0, 'msgBox');
+  var back_button = gameScene.add.sprite(280, 80, 'back_button').setScale(0.2);
+  //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+  let go_home_text1 = gameScene.add.text(-320, -60, 'Uh oh! You have not clean up your hands yet!', {
+      font: '30px Lucida Sans Unicode',
+      fill: '#ffffff'
+  });
+
+  let go_home_text2 = gameScene.add.text(-320, -10, 'GO BACK HOME before it is too late.', {
+    font: '30px Lucida Sans Unicode',
+    fill: '#ffffff'
+  });
+  gameScene.msgBox.add(back);
+  gameScene.msgBox.add(back_button);
+  gameScene.msgBox.add(go_home_text1);
+  gameScene.msgBox.add(go_home_text2);
+
+  back_button.setInteractive();
+  back_button.on('pointerdown', function(){
+      gameScene.msgBox.destroy();
+      gameScene.msgBox = undefined;
+      //this.scene.resume('Game');
+  }, gameScene);
+};

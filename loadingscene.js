@@ -20,10 +20,14 @@ loadingScene.preload = function() {
   this.load.image('back_button', 'assets/back_button.png');
   this.load.image('bac1', 'assets/bacteria1.png');
   this.load.image('surprised_cat', 'assets/surprised_cat.png');
-  this.load.audio('meow', 'assets/meow.wav');
   this.load.image('handSani', 'assets/minigame/sani.png');
   this.load.image('palm', 'assets/minigame/palm.png');
   this.load.image('go_button', 'assets/minigame/go_button.png');
+  this.load.image('toilet', 'assets/toilet.png');
+  this.load.audio('meow', 'assets/meow.wav');
+  this.load.audio('magic', 'assets/magic.wav');
+  this.load.audio('flush', 'assets/flush.wav');
+  this.load.audio('click', 'assets/click.wav');
 }
 
 loadingScene.create = function() {

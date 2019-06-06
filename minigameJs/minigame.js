@@ -10,6 +10,7 @@ minigameScene.preload = function() {
   this.load.image('bacteriaYellow', 'assets/minigame/bacteriaYellow.png');
   this.load.image('paddle', 'assets/minigame/paddle.png');
   this.load.image('ball', 'assets/minigame/ball.png');
+  this.load.audio('hit', 'assets/minigame/shot.wav');
 };
 let score = 0;
 let gameOver = false;
@@ -53,6 +54,8 @@ minigameScene.update = function (time, delta)
 function onHitBlock (ball, block)
 {
     block.disableBody(true, true);
+    var sound = this.sound.add('hit');
+    sound.play();
     //  Add and update the score
     score += 10;
     this.scoreText.setText('Score: ' + score);

@@ -100,8 +100,8 @@ gameScene.create = function() {
   this.physics.add.collider(this.player, this.balloon, onHitBalloon, null, this);
   this.physics.add.overlap(this.player, this.house, onHitHouse, null, this);
   this.physics.add.collider(this.player, this.goal, onHitGoal, null, this);
-  this.physics.add.overlap(this.player, this.bac1, onHitBacteria, null, this);
-  this.physics.add.overlap(this.player, this.bac2, onHitBacteria, null, this);
+  this.physics.add.overlap(this.player, this.bac1, onHitBacteria1, null, this);
+  this.physics.add.overlap(this.player, this.bac2, onHitBacteria2, null, this);
   this.physics.add.collider(this.player, this.sani, onHitSani, null, this);
 };
 
@@ -147,6 +147,8 @@ function onHitBalloon () {
   }
   else {
     balloon_touched = true;
+    let sound = this.sound.add('magic');
+    sound.play();
     this.balloon.destroy();
     this.balloon = undefined;
 
@@ -169,6 +171,8 @@ function onHitBalloon () {
 
     back_button.setInteractive();
     back_button.on('pointerdown', function(){
+        var click = this.sound.add('click');
+        click.play();
         this.msgBox.destroy();
         this.msgBox = undefined;
         //this.scene.resume('Game');
@@ -188,7 +192,7 @@ function onHitHouse () {
   }
 };
 
-function onHitBacteria() {
+function onHitBacteria1() {
   //this.scene.pause('Game');
   if(!bacteria_touched) {
     if(this.msgBox) {
@@ -237,10 +241,72 @@ function onHitBacteria() {
 
     back_button.setInteractive();
     back_button.on('pointerdown', function(){
+        var click = this.sound.add('click');
+        click.play();
         this.msgBox.destroy();
         this.msgBox = undefined;
         this.bac1.destroy();
         this.bac1 = undefined;
+        bacteria_touched = true;
+    }, this);
+  }
+};
+
+function onHitBacteria2() {
+  //this.scene.pause('Game');
+  if(!bacteria_touched) {
+    if(this.msgBox) {
+      return;
+    }
+    console.log('Bacteria Event created');
+
+    var flushSound = this.sound.add('flush');
+    flushSound.play();
+    // Creating a message box
+    this.msgBox = this.add.container(400, 300);
+    var back = this.add.sprite(0, 0, 'msgBox');
+    var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
+    var place = this.add.sprite(270, -30, 'toilet').setScale(0.2);
+    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+    let bac_type = this.add.text(-320, -100, 'Oh no! You’ve picked up a clostridioides from a public toilet!', {
+        font: '20px Lucida Sans Unicode',
+        fill: '#ffffff',
+        wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+    let instruction = this.add.text(-320, -50, 'You’d better go wash your hands so you don’t get sick!', {
+      font: '20px Lucida Sans Unicode',
+      fill: '#ffffff',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+    let info = this.add.text(-320, -10, 'An infection from this bacterium can cause fever and dehydration.', {
+      font: '20px Lucida Sans Unicode',
+      fill: '#ffffff',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+
+    let danger = this.add.text(-320, 50, 'Danger level: HIGH', {
+      font: '30px Impact',
+      fill: '#FF5554',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+    });
+
+
+    this.msgBox.add(back);
+    this.msgBox.add(place);
+    this.msgBox.add(back_button);
+    this.msgBox.add(bac_type);
+    this.msgBox.add(instruction);
+    this.msgBox.add(info);
+    this.msgBox.add(danger);
+
+    back_button.setInteractive();
+    back_button.on('pointerdown', function(){
+        var click = this.sound.add('click');
+        click.play();
+        this.msgBox.destroy();
+        this.msgBox = undefined;
+        this.bac2.destroy();
+        this.bac2 = undefined;
         bacteria_touched = true;
     }, this);
   }
@@ -283,6 +349,8 @@ function goHomeMsg() {
 
   back_button.setInteractive();
   back_button.on('pointerdown', function(){
+      var click = this.sound.add('click');
+      click.play();
       gameScene.msgBox.destroy();
       gameScene.msgBox = undefined;
       //this.scene.resume('Game');
@@ -293,29 +361,36 @@ function onHitSani() {
   if(gameScene.msgBox) {
     return;
   }
-  console.log('Start minigame');
-  // Creating a message box
-  gameScene.msgBox = gameScene.add.container(400, 300);
-  var back = gameScene.add.sprite(0, 0, 'msgBox');
-  var go_button = gameScene.add.sprite(280, 80, 'go_button').setScale(0.2);
-  //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
-  let text1 = gameScene.add.text(-320, -60, 'You have just found a hand sanitizer! Destroy all the bateria in the screen by controling the paddle with the left and right keys.', {
-      font: '30px Lucida Sans Unicode',
-      fill: '#ffffff',
-      wordWrap: {width: 550, useAdvanceWrap: true}
-  });
+  if(bacteria_touched) {
+    goHomeMsg();
+  }
+  else {
+    console.log('Start minigame');
+    // Creating a message box
+    gameScene.msgBox = gameScene.add.container(400, 300);
+    var back = gameScene.add.sprite(0, 0, 'msgBox');
+    var go_button = gameScene.add.sprite(280, 80, 'go_button').setScale(0.2);
+    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+    let text1 = gameScene.add.text(-320, -100, 'Woah! You have found some hand sanitizer! Clear all the bacteria for a chance to add the hand sanitizer to your inventory. If you win, you can use it to ward off low-level bacteria without returning home! Use the left/right arrow button to control the paddle.', {
+        font: '24px Lucida Sans Unicode',
+        fill: '#ffffff',
+        wordWrap: {width: 580, useAdvanceWrap: true}
+    });
 
-  gameScene.msgBox.add(back);
-  gameScene.msgBox.add(go_button);
-  gameScene.msgBox.add(text1);
+    gameScene.msgBox.add(back);
+    gameScene.msgBox.add(go_button);
+    gameScene.msgBox.add(text1);
 
-  go_button.setInteractive();
-  go_button.on('pointerdown', function(){
-      gameScene.msgBox.destroy();
-      gameScene.msgBox = undefined;
-      this.sani.destroy();
-      this.sani = undefined;
-      this.scene.launch('Minigame');
-      this.scene.pause();
-  }, gameScene);
+    go_button.setInteractive();
+    go_button.on('pointerdown', function(){
+        var click = this.sound.add('click');
+        click.play();
+        gameScene.msgBox.destroy();
+        gameScene.msgBox = undefined;
+        this.sani.destroy();
+        this.sani = undefined;
+        this.scene.launch('Minigame');
+        this.scene.pause();
+    }, gameScene);
+  }
 };

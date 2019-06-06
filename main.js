@@ -8,10 +8,10 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: true
+            debug: false
         }
     },
-    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene],
+    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene],
     backgroundColor: '#154A1E'
 };
 
@@ -61,6 +61,18 @@ gameScene.create = function() {
   this.bac1.setScale(0.2);
   this.bac1.setAlpha(0);
 
+  this.bac2 = this.physics.add.sprite(700,200, 'bac1');
+  this.bac2.body.allowGravity = false;
+  this.bac2.setImmovable();
+  this.bac2.setScale(0.1);
+  this.bac2.setAlpha(0);
+
+  // Hand Sanitizer
+  this.sani = this.physics.add.sprite(400, 100, 'handSani');
+  this.sani.body.allowGravity = false;
+  this.sani.setImmovable();
+  this.sani.setScale(0.07);
+
   // Start and goal
   this.house = this.physics.add.sprite(80, 480, 'start');
   this.house.body.allowGravity = false;
@@ -88,9 +100,9 @@ gameScene.create = function() {
   this.physics.add.collider(this.player, this.balloon, onHitBalloon, null, this);
   this.physics.add.overlap(this.player, this.house, onHitHouse, null, this);
   this.physics.add.collider(this.player, this.goal, onHitGoal, null, this);
-  this.physics.add.collider(this.player, this.bac1, onHitBacteria, null, this);
-  //this.physics.add.collider(this.player, this.house, onHitHouse, null, this);
-  //this.physics.world.collideSpriteVsGroup(this.player, this.maze);
+  this.physics.add.overlap(this.player, this.bac1, onHitBacteria, null, this);
+  this.physics.add.overlap(this.player, this.bac2, onHitBacteria, null, this);
+  this.physics.add.collider(this.player, this.sani, onHitSani, null, this);
 };
 
 gameScene.update = function(time, delta) {
@@ -232,10 +244,6 @@ function onHitBacteria() {
         bacteria_touched = true;
     }, this);
   }
-  else {
-    // Change to minigame scene later
-    console.log('Minigame will start now');
-  }
 };
 
 function onHitGoal() {
@@ -278,5 +286,36 @@ function goHomeMsg() {
       gameScene.msgBox.destroy();
       gameScene.msgBox = undefined;
       //this.scene.resume('Game');
+  }, gameScene);
+};
+
+function onHitSani() {
+  if(gameScene.msgBox) {
+    return;
+  }
+  console.log('Start minigame');
+  // Creating a message box
+  gameScene.msgBox = gameScene.add.container(400, 300);
+  var back = gameScene.add.sprite(0, 0, 'msgBox');
+  var go_button = gameScene.add.sprite(280, 80, 'go_button').setScale(0.2);
+  //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+  let text1 = gameScene.add.text(-320, -60, 'You have just found a hand sanitizer! Destroy all the bateria in the screen by controling the paddle with the left and right keys.', {
+      font: '30px Lucida Sans Unicode',
+      fill: '#ffffff',
+      wordWrap: {width: 550, useAdvanceWrap: true}
+  });
+
+  gameScene.msgBox.add(back);
+  gameScene.msgBox.add(go_button);
+  gameScene.msgBox.add(text1);
+
+  go_button.setInteractive();
+  go_button.on('pointerdown', function(){
+      gameScene.msgBox.destroy();
+      gameScene.msgBox = undefined;
+      this.sani.destroy();
+      this.sani = undefined;
+      this.scene.launch('Minigame');
+      this.scene.pause();
   }, gameScene);
 };

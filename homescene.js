@@ -38,7 +38,7 @@ homeScene.create = function() {
     // make the text interactive and load game scene when clicked
     startText.setInteractive();
     startText.on('pointerdown', function(){
-        this.scene.start('Wash');
+        this.scene.start('Game');
     }, this);
     // create the start buttons background
     let textBg = this.add.graphics();

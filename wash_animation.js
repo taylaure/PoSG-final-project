@@ -40,16 +40,24 @@ washAnimationScene.create = function() {
             }
             else {
               var washImg = this.add.sprite(150 + 250 * j, 120 + 180 * i, this.images[i * 3 + j]).setScale(0.25);
+              /*
+              washImg.setAlpha(0);
+              washAnimationScene.tween.add({
+                target: washImg,
+                duration: 200,
+                alpha: '+=0.1'
+              });
+              */
             }
           },
           callbackScope: this
         });
         console.log(this.timeDelay);
-        this.timeDelay += 2000;
+        this.timeDelay += 1000;
     }
   }
   exit = this.time.addEvent({
-    delay: this.timeDelay + 2000,
+    delay: this.timeDelay + 1000,
     callback: ()=>{
       this.waterSound.stop();
         this.scene.resume('Game');
@@ -60,8 +68,4 @@ washAnimationScene.create = function() {
 
 washAnimationScene.update = function() {
 
-}
-
-function fadeInPicture() {
-    this.wash1 = this.add.sprite(150, 120, this.images[this.count]).setScale(0.25);
 }

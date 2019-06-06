@@ -10,6 +10,7 @@ welcomeScene.preload = function() {
   this.load.image("Background", "assets/forest.jpg");
   this.load.image('msgBox', 'assets/blue_banner.png');
   this.load.image('back_button', 'assets/back_button.png');
+  this.load.audio('click', 'assets/click.wav');
 
 };
 
@@ -32,12 +33,14 @@ welcomeScene.create = function ()
     fill: '#ffffff'
   });
 
-  let back_button = this.add.sprite(650, 400, 'back_button').setScale(0.25);
+  let back_button = this.add.sprite(650, 400, 'go_button').setScale(0.25);
 
   back_button.setInteractive();
 
   back_button.on('pointerdown', function(){
-      washScene.scene.start('Wash');
+      var click = welcomeScene.sound.add('click');
+      click.play();
+      welcomeScene.scene.start('Wash');
 
   });
 };

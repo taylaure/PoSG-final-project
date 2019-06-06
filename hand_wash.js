@@ -244,11 +244,13 @@ function gameUpdate(){
           fill: '#00000'
         });
 
-        var back_button = washScene.add.sprite(700, 110, 'back_button').setScale(0.1);
+        var back_button = washScene.add.sprite(700, 110, 'go_button').setScale(0.1);
 
         back_button.setInteractive();
 
         back_button.on('pointerdown', function(){
+          var click = washScene.sound.add('click');
+          click.play();
             washScene.scene.start('Game');
 
         });

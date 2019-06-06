@@ -46,37 +46,42 @@ minigameScene.update = function (time, delta)
       if(this.msgBox) {
         return;
       }
-      console.log('Win Game');
+      else {
+        console.log('Win Game');
 
-      var cheer = this.sound.add('cheer');
-      cheer.play();
-      // Creating a message box
-      this.msgBox = this.add.container(400, 300);
-      var back = this.add.sprite(0, 0, 'msgBox');
-      var ok_button = this.add.sprite(280, 80, 'okButton').setScale(0.2);
-      var place = this.add.sprite(270, -30, 'handSani').setScale(0.2);
-      //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
-      let congrats = this.add.text(-320, -100, 'Congratulations! You have won a hand sanitizer!', {
-          font: '20px Lucida Sans Unicode',
-          fill: '#ffffff',
-          wordWrap: {width: 550, useAdvanceWrap: true}
-      });
+        this.ball.setVelocity(0, 0)
+        this.ball = undefined;
 
-      this.msgBox.add(back);
-      this.msgBox.add(place);
-      this.msgBox.add(ok_button);
-      this.msgBox.add(congrats);
+        var cheer = this.sound.add('cheer');
+        cheer.play();
+        // Creating a message box
+        this.msgBox = this.add.container(400, 300);
+        var back = this.add.sprite(0, 0, 'msgBox');
+        var ok_button = this.add.sprite(280, 80, 'okButton').setScale(0.1);
+        var place = this.add.sprite(270, -30, 'handSani').setScale(0.2);
+        //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+        let congrats = this.add.text(-320, -100, 'Congratulations! You have won a hand sanitizer!', {
+            font: '20px Lucida Sans Unicode',
+            fill: '#ffffff',
+            wordWrap: {width: 550, useAdvanceWrap: true}
+        });
 
-      ok_button.setInteractive();
-      ok_button.on('pointerdown', function(){
-          var click = this.sound.add('click');
-          click.play();
-          this.msgBox.destroy();
-          this.msgBox = undefined;
-          this.scene.resume('Game');
-          this.scene.stop();
-      }, this);
-      return;
+        this.msgBox.add(back);
+        this.msgBox.add(place);
+        this.msgBox.add(ok_button);
+        this.msgBox.add(congrats);
+
+        ok_button.setInteractive();
+        ok_button.on('pointerdown', function(){
+            var click = this.sound.add('click');
+            click.play();
+            this.msgBox.destroy();
+            //this.msgBox = undefined;
+            this.scene.resume('Game');
+            this.scene.stop();
+        }, this);
+        return;
+      }
     }
     this.paddle.update(time, delta);
     this.ball.update(time, delta);

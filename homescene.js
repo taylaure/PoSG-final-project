@@ -38,6 +38,8 @@ homeScene.create = function() {
     // make the text interactive and load game scene when clicked
     startText.setInteractive();
     startText.on('pointerdown', function(){
+      var click = this.sound.add('click');
+      click.play();
         this.scene.start('Game');
     }, this);
     // create the start buttons background

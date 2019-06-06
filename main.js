@@ -11,7 +11,7 @@ let config = {
             debug: false
         }
     },
-    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene],
+    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene],
     backgroundColor: '#154A1E'
 };
 
@@ -117,33 +117,6 @@ function onHitBalloon () {
     }
     console.log('messageBox created');
     goHomeMsg();
-    /*
-    // Creating a message box
-    this.msgBox = this.add.container(400, 300);
-    var back = this.add.sprite(0, 0, 'msgBox');
-    var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
-    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
-    let go_home_text1 = this.add.text(-320, -60, 'Uh oh! You have not clean up your hands yet!', {
-        font: '30px Lucida Sans Unicode',
-        fill: '#ffffff'
-    });
-
-    let go_home_text2 = this.add.text(-320, -10, 'GO BACK HOME before it is too late.', {
-      font: '30px Lucida Sans Unicode',
-      fill: '#ffffff'
-    });
-    this.msgBox.add(back);
-    this.msgBox.add(back_button);
-    this.msgBox.add(go_home_text1);
-    this.msgBox.add(go_home_text2);
-
-    back_button.setInteractive();
-    back_button.on('pointerdown', function(){
-        this.msgBox.destroy();
-        this.msgBox = undefined;
-        //this.scene.resume('Game');
-    }, this);
-    */
   }
   else {
     balloon_touched = true;
@@ -366,6 +339,8 @@ function onHitSani() {
   }
   else {
     console.log('Start minigame');
+    let sound = this.sound.add('magic');
+    sound.play();
     // Creating a message box
     gameScene.msgBox = gameScene.add.container(400, 300);
     var back = gameScene.add.sprite(0, 0, 'msgBox');

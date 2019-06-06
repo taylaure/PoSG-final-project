@@ -28,7 +28,7 @@ welcomeScene.create = function ()
 
   let banner = this.add.sprite(config.width/2,config.height/2, 'msgBox').setScale(1.1);
 
-  let text = this.add.text(50,175, "Welcome to ___! \nGoal: collect all the party supplies and join your friends at the party. \n\nBut watch out! Along the way you may run into some nasty \nbacteria that are so small they can’t be seen. If you pick up a \nbacterium, you will have to return home to wash your hands \nbefore you can continue. \n\nGood luck!",{
+  let text = this.add.text(50,175, "Welcome to A Bacterial Birthday! \nGoal: Collect all the party supplies and join your friends at the party. \n\nBut watch out! Along the way you may run into some nasty \nbacteria that are so small they can’t be seen. If you pick up a \nbacterium, you will have to return home to wash your hands \nbefore you can continue. \n\nGood luck!",{
     font: '25px Lucida Sans Unicode',
     fill: '#ffffff'
   });

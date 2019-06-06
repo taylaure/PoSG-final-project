@@ -22,7 +22,7 @@ homeScene.create = function() {
 
 
     // Game Title
-    let titleText = this.add.text(gameWidth/2, 150, 'BIRTHDAY SURPRISE', {
+    let titleText = this.add.text(gameWidth/2, 150, 'A Bacterial Birthday', {
         font: '80px Impact',
         fill: '#ffffff'
     });
@@ -40,7 +40,7 @@ homeScene.create = function() {
     startText.on('pointerdown', function(){
       var click = this.sound.add('click');
       click.play();
-        this.scene.start('Game');
+      this.scene.start('Welcome');
     }, this);
     // create the start buttons background
     let textBg = this.add.graphics();

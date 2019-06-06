@@ -25,6 +25,9 @@ loadingScene.preload = function() {
   this.load.image('go_button', 'assets/minigame/go_button.png');
   this.load.image('toilet', 'assets/toilet.png');
   this.load.image('okButton', 'assets/ok.png');
+  this.load.image('inventory', 'assets/inventory.png');
+  this.load.image('yes_button', 'assets/yes.png');
+  this.load.image('no_button', 'assets/no.png');
   this.load.audio('meow', 'assets/meow.wav');
   this.load.audio('magic', 'assets/magic.wav');
   this.load.audio('flush', 'assets/flush.wav');

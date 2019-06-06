@@ -11,7 +11,7 @@ let config = {
             debug: false
         }
     },
-    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene],
+    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene, endScene],
     backgroundColor: '#154A1E'
 };
 
@@ -20,6 +20,7 @@ let game = new Phaser.Game(config);
 let bacteria_touched = false;
 let home_count = 0;
 let balloon_touched = false;
+let isWin = false;
 
 gameScene.create = function() {
 
@@ -53,6 +54,16 @@ gameScene.create = function() {
   // Trees near goal
   this.maze.create(550, 50, 'white_tree').setScale(0.2).refreshBody();
   this.maze.create(580, 70, 'white_tree').setScale(0.2).refreshBody();
+
+  // Inventory
+  this.maze.create(650, 500, 'inventory').setScale(0.4).refreshBody();
+  this.handSaniCount = 0;
+  this.itemCount = 0;
+  this.inventoryText = this.add.text(570, 460, 'INVENTORY', {font: '24px Impact', fill: '#FFF'});
+  this.handSaniText = this.add.text(570, 500, 'Hand Sanitizer: 0', { font: '20px Lucida Sans Unicode', fill: '#FFF' });
+  this.handSaniText.setText('Hand Sanitizers: ' + this.handSaniCount);
+  this.itemText = this.add.text(570, 530, 'Presents found: 0', { font: '20px Lucida Sans Unicode', fill: '#FFF' });
+  this.itemText.setText('Presents found: ' + this.itemCount);
 
   // Bacteria
   this.bac1 = this.physics.add.sprite(525,375, 'bac1');
@@ -106,7 +117,9 @@ gameScene.create = function() {
 };
 
 gameScene.update = function(time, delta) {
-  this.player.update(time, delta);
+  if(!isWin) {
+    this.player.update(time, delta);
+  }
 };
 
 function onHitBalloon () {
@@ -141,6 +154,8 @@ function onHitBalloon () {
     this.msgBox.add(back);
     this.msgBox.add(back_button);
     this.msgBox.add(go_home_text1);
+    this.itemCount += 1;
+    this.itemText.setText('Presents found: ' + (this.itemCount));
 
     back_button.setInteractive();
     back_button.on('pointerdown', function(){
@@ -221,6 +236,49 @@ function onHitBacteria1() {
         this.bac1.destroy();
         this.bac1 = undefined;
         bacteria_touched = true;
+        console.log('touched');
+        console.log('hand sani count: ' + this.handSaniCount);
+        if(this.handSaniCount > 0) {
+          // Prompt player to use the hand sanitizer
+          console.log('Prompt Hand Sanitizer Use');
+          let sound = this.sound.add('magic');
+          sound.play();
+          // Creating a message box
+          this.msgBox = this.add.container(400, 300);
+          var back = this.add.sprite(0, 0, 'msgBox');
+          var yes_button = this.add.sprite(100, 80, 'yes_button').setScale(0.2);
+          var no_button = this.add.sprite(230, 80, 'no_button').setScale(0.2);
+          //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+          let text1 = this.add.text(-320, -100, 'Looks like some hand sanitizers! Do you want to use them now?', {
+              font: '24px Lucida Sans Unicode',
+              fill: '#ffffff',
+              wordWrap: {width: 580, useAdvanceWrap: true}
+          });
+
+          this.msgBox.add(back);
+          this.msgBox.add(yes_button);
+          this.msgBox.add(no_button);
+          this.msgBox.add(text1);
+
+          yes_button.setInteractive();
+          yes_button.on('pointerdown', function(){
+              var click = this.sound.add('click');
+              click.play();
+              this.msgBox.destroy();
+              this.msgBox = undefined;
+              this.handSaniCount -= 1;
+              this.handSaniText.setText('Hand Sanitizers: ' + (this.handSaniCount));
+              bacteria_touched = false;
+          }, gameScene);
+
+          no_button.setInteractive();
+          no_button.on('pointerdown', function(){
+              var click = this.sound.add('click');
+              click.play();
+              gameScene.msgBox.destroy();
+              gameScene.msgBox = undefined;
+          }, gameScene);
+        }
     }, this);
   }
 };
@@ -281,6 +339,47 @@ function onHitBacteria2() {
         this.bac2.destroy();
         this.bac2 = undefined;
         bacteria_touched = true;
+        if(this.handSaniCount > 0) {
+          // Prompt player to use the hand sanitizer
+          console.log('Prompt Hand Sanitizer Use');
+          let sound = this.sound.add('magic');
+          sound.play();
+          // Creating a message box
+          this.msgBox = this.add.container(400, 300);
+          var back = this.add.sprite(0, 0, 'msgBox');
+          var yes_button = this.add.sprite(100, 80, 'yes_button').setScale(0.2);
+          var no_button = this.add.sprite(230, 80, 'no_button').setScale(0.2);
+          //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
+          let text1 = this.add.text(-320, -100, 'Looks like some hand sanitizers! Do you want to use them now?', {
+              font: '24px Lucida Sans Unicode',
+              fill: '#ffffff',
+              wordWrap: {width: 580, useAdvanceWrap: true}
+          });
+
+          this.msgBox.add(back);
+          this.msgBox.add(yes_button);
+          this.msgBox.add(no_button);
+          this.msgBox.add(text1);
+
+          yes_button.setInteractive();
+          yes_button.on('pointerdown', function(){
+              var click = this.sound.add('click');
+              click.play();
+              this.msgBox.destroy();
+              this.msgBox = undefined;
+              this.handSaniCount -= 1;
+              this.handSaniText.setText('Hand Sanitizers: ' + (this.handSaniCount));
+              bacteria_touched = false;
+          }, gameScene);
+
+          no_button.setInteractive();
+          no_button.on('pointerdown', function(){
+              var click = this.sound.add('click');
+              click.play();
+              gameScene.msgBox.destroy();
+              gameScene.msgBox = undefined;
+          }, gameScene);
+        }
     }, this);
   }
 };
@@ -295,8 +394,10 @@ function onHitGoal() {
       goHomeMsg();
     }
   }
-  else if(!balloon_touched) {
-    console.log('You have not find all the presents for your friend yet!');
+  else if(balloon_touched) {
+    console.log('Transit to End Scene');
+    isWin = true;
+    gameScene.scene.start('End');
   }
 };
 

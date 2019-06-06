@@ -40,14 +40,6 @@ washAnimationScene.create = function() {
             }
             else {
               var washImg = this.add.sprite(150 + 250 * j, 120 + 180 * i, this.images[i * 3 + j]).setScale(0.25);
-              /*
-              washImg.setAlpha(0);
-              washAnimationScene.tween.add({
-                target: washImg,
-                duration: 200,
-                alpha: '+=0.1'
-              });
-              */
             }
           },
           callbackScope: this

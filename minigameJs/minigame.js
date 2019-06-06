@@ -41,7 +41,7 @@ minigameScene.create = function ()
 
 minigameScene.update = function (time, delta)
 {
-    if (score > 0)
+    if (gameOver)
     {
       if(this.msgBox) {
         return;

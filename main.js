@@ -117,13 +117,14 @@ gameScene.create = function() {
 };
 
 gameScene.update = function(time, delta) {
-  if(!isWin) {
+  if(!isWin && !this.msgBox) {
     this.player.update(time, delta);
   }
 };
 
 function onHitBalloon () {
   //this.scene.pause('Game');
+  this.player.setVelocity(0, 0);
   if(bacteria_touched) {
     if(this.msgBox) {
       return;
@@ -173,6 +174,7 @@ function onHitBalloon () {
 };
 
 function onHitHouse () {
+  this.player.setVelocity(0, 0);
   if(bacteria_touched) {
     this.scene.launch('WashAnimation');
     bacteria_touched = false;
@@ -181,7 +183,8 @@ function onHitHouse () {
 };
 
 function onHitBacteria1() {
-  //this.scene.pause('Game');
+  //this.scene.pause('Game')
+  this.player.setVelocity(0, 0);;
   if(!bacteria_touched) {
     if(this.msgBox) {
       return;
@@ -285,6 +288,7 @@ function onHitBacteria1() {
 
 function onHitBacteria2() {
   //this.scene.pause('Game');
+  this.player.setVelocity(0, 0);
   if(!bacteria_touched) {
     if(this.msgBox) {
       return;
@@ -385,14 +389,13 @@ function onHitBacteria2() {
 };
 
 function onHitGoal() {
+  this.player.setVelocity(0, 0);
   if(bacteria_touched) {
-    if(bacteria_touched) {
-      if(this.msgBox) {
-        return;
-      }
-      console.log('messageBox created');
-      goHomeMsg();
+    if(this.msgBox) {
+      return;
     }
+    console.log('messageBox created');
+    goHomeMsg();
   }
   else if(balloon_touched) {
     console.log('Transit to End Scene');
@@ -432,6 +435,7 @@ function goHomeMsg() {
 };
 
 function onHitSani() {
+  this.player.setVelocity(0, 0);
   if(gameScene.msgBox) {
     return;
   }

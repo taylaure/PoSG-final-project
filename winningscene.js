@@ -16,7 +16,7 @@ winningScene.preload = function() {
   this.load.image('dog', 'assets/animal_wash/dog.png');
   this.load.image('girl', 'assets/animal_wash/girl.png');
   this.load.image('rabbit', 'assets/animal_wash/rabbit.png');
-  this.load.audio('click', 'assets/click.wav');
+  
 
 };
 

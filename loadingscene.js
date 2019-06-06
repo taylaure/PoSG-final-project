@@ -27,7 +27,7 @@ loadingScene.preload = function() {
   this.load.image('okButton', 'assets/ok.png');
   this.load.audio('meow', 'assets/meow.wav');
   this.load.audio('magic', 'assets/magic.wav');
-  this.load.audio('flush', 'assets/flush.wav');
+  //this.load.audio('flush', 'assets/flush.wav');
   this.load.audio('click', 'assets/click.wav');
   this.load.audio('cheer', 'assets/cheer.wav');
 }

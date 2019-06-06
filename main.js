@@ -233,8 +233,8 @@ function onHitBacteria2() {
     }
     console.log('Bacteria Event created');
 
-    var flushSound = this.sound.add('flush');
-    flushSound.play();
+    // var flushSound = this.sound.add('flush');
+    // flushSound.play();
     // Creating a message box
     this.msgBox = this.add.container(400, 300);
     var back = this.add.sprite(0, 0, 'msgBox');

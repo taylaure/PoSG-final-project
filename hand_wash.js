@@ -17,11 +17,10 @@ washScene.preload = function(){
   this.load.image('bath_background', 'assets/bath_background.png');
   this.load.image('hands', 'assets/hands.png');
   this.load.image('hit-box', 'assets/hit-box.png');
-  this.load.image('speech', 'assets/speech-bubble.png');
   this.load.image('back_button', 'assets/back_button.png');
   this.load.image('msgBox', 'assets/msgBox.png');
   this.load.audio('water', 'assets/water.wav');
-  this.load.audio('bubble', 'assets/bubble.wav');
+  this.load.audio('bubble', 'assets/bubbles.wav');
 
 
 
@@ -76,171 +75,14 @@ washScene.create = function(){
 
   gameIntro();
 
-  // soapPrompt();
-  //
-  // rinsePrompt();
-  //
-  // dryPrompt();
-  //
-  // finalPrompt();
-
-
-
-  //intro.destroy();
-
 
 
 };
 
 washScene.update = function(time, delta){
 
-  let handsRect = this.hands.getBounds();
-  let contRect = this.hit_box.getBounds();
-  let soapRect = this.soap.getBounds();
 
-
-
-  if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect) && step1 === true) {
-
-      console.log('water sound playing');
-      this.waterSound.play();
-
-      washScene.time.addEvent({
-      delay: 9000,
-      callback: ()=>{
-
-        step1 = false;
-
-        step2 = true;
-
-        let text2 = washScene.add.text(450, 36, "Good Job! Now we must get some soap! \nPick up the soap next to the sink and \nrub it on your hands!", {
-          font: '20px Lucida Sans Unicode',
-          fill: '#00000'
-
-
-        });
-
-          washScene.time.addEvent({
-          delay: 15000,
-          callback: ()=>{
-
-
-            text2.destroy();
-          },
-        loop: false
-        })
-      },
-      loop: false
-      })
-
-  }
-
-  if(Phaser.Geom.Intersects.RectangleToRectangle(handsRect, soapRect) && step2){
-      console.log('bubble sound playing');
-
-        this.bubbleSound.play();
-
-        washScene.time.addEvent({
-        delay: 15000,
-        callback: ()=>{
-
-
-          step2 = false;
-
-          step3 = true;
-
-          let text = washScene.add.text(450, 36, "Excellent! Now need to rinse our hands! \nPlace your hands back \nunder the sink.", {
-            font: '20px Lucida Sans Unicode',
-            fill: '#00000'
-          });
-
-            washScene.time.addEvent({
-            delay: 5000,
-            callback: ()=>{
-
-              text.destroy();
-            },
-            loop: false
-            })
-
-
-        },
-        loop: false
-        })
-
-
-  }
-
-  if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect) && step3 === true) {
-
-      console.log('water sound playing');
-      this.waterSound.play();
-
-      step3 = false;
-
-      step4 = true;
-
-      washScene.time.addEvent({
-      delay: 10000,
-      callback: ()=>{
-
-        let text = washScene.add.text(450, 36, "Amazing! You're almost done! Now use \nthe towel to dry your hands.", {
-          font: '20px Lucida Sans Unicode',
-          fill: '#00000'
-        });
-
-        washScene.time.addEvent({
-        delay: 4000,
-        callback: ()=>{
-
-          text.destroy();
-        },
-        loop: false
-        })
-      },
-      loop: false
-      })
-
-  }
-
-  if (step4 === true) {
-
-    step4 = false;
-
-      washScene.time.addEvent({
-      delay: 15000,
-      callback: ()=>{
-
-        let text = washScene.add.text(450, 36, "Yay! I knew you could do it! Now it's time to \ncollect supplies for your friends birthday \nbut beware, you never know what creatures \ncould be lurking on the way.", {
-          font: '18px Lucida Sans Unicode',
-          fill: '#00000'
-        });
-
-        var back_button = washScene.add.sprite(700, 110, 'back_button').setScale(0.1);
-
-        back_button.setInteractive();
-
-        back_button.on('pointerdown', function(){
-            washScene.scene.start('Game');
-
-        });
-      },
-      loop: false
-      })
-
-  }
-
-
-
-  // let soapRect = this.soap.getBounds();
-  //
-  //
-  //
-  // if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, soapRect)) {
-  //
-  //     this.bubbleSound.play();
-  //
-  // }
+    gameUpdate();
 
 
 };
@@ -276,98 +118,143 @@ function gameIntro(){
 
 }
 
-function soapPrompt(){
-  washScene.time.addEvent({
-  delay: 18000,
-  callback: ()=>{
+function gameUpdate(){
+  let handsRect = washScene.hands.getBounds();
+  let contRect = washScene.hit_box.getBounds();
+  let soapRect = washScene.soap.getBounds();
+  let towelRect = washScene.towel.getBounds();
 
-      let text = washScene.add.text(450, 36, "Good Job! Now we must get some soap! \nPick up the soap next to the sink and \nrub it on your hands!", {
-        font: '20px Lucida Sans Unicode',
-        fill: '#00000'
-      });
+  if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect) && step1 === true) {
+
+      console.log('water sound playing');
+      washScene.waterSound.play();
+
+      step1 = false;
 
       washScene.time.addEvent({
-      delay: 15000,
+      delay: 7000,
       callback: ()=>{
 
+        step2 = true;
 
-        text.destroy();
+        let text2 = washScene.add.text(450, 36, "Good Job! Now we must get some soap! \nPick up the soap next to the sink and \nrub it on your hands!", {
+          font: '20px Lucida Sans Unicode',
+          fill: '#00000'
+
+
+        });
+
+          washScene.time.addEvent({
+          delay: 15000,
+          callback: ()=>{
+
+
+            text2.destroy();
+          },
+        loop: false
+        })
       },
       loop: false
       })
 
-  },
-  loop: false
-  })
-}
+  }
 
-function rinsePrompt(){
-  washScene.time.addEvent({
-  delay: 33000,
-  callback: ()=>{
+  if(Phaser.Geom.Intersects.RectangleToRectangle(handsRect, soapRect) && step2){
+      console.log('bubble sound playing');
 
-      let text = washScene.add.text(450, 36, "Excellent! Now need to rinse our hands! \nPlace your hands back \nunder the sink.", {
-        font: '20px Lucida Sans Unicode',
-        fill: '#00000'
-      });
+        washScene.bubbleSound.play();
+
+        step2 = false;
+
+        washScene.bubbleSound.play();
+
+
+        washScene.time.addEvent({
+        delay: 15000,
+        callback: ()=>{
+
+          step3 = true;
+
+          let text = washScene.add.text(450, 36, "Excellent! Now need to rinse our hands! \nPlace your hands back \nunder the sink.", {
+            font: '20px Lucida Sans Unicode',
+            fill: '#00000'
+          });
+
+            washScene.time.addEvent({
+            delay: 9000,
+            callback: ()=>{
+
+              text.destroy();
+            },
+            loop: false
+            })
+
+
+        },
+        loop: false
+        })
+
+
+  }
+
+  if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect) && step3 === true) {
+
+      console.log('water sound playing');
+      washScene.waterSound.play();
+
+      step3 = false;
+
+
 
       washScene.time.addEvent({
       delay: 9000,
       callback: ()=>{
 
-        text.destroy();
+        step4 = true;
+
+        let text = washScene.add.text(450, 36, "Amazing! You're almost done! Now use \nthe towel to dry your hands.", {
+          font: '20px Lucida Sans Unicode',
+          fill: '#00000'
+        });
+
+        washScene.time.addEvent({
+        delay: 7000,
+        callback: ()=>{
+
+          text.destroy();
+        },
+        loop: false
+        })
       },
       loop: false
       })
 
-  },
-  loop: false
-  })
-}
+  }
 
-function dryPrompt(){
-  washScene.time.addEvent({
-  delay: 42000,
-  callback: ()=>{
+  if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, towelRect) && step4 === true) {
 
-      let text = washScene.add.text(450, 36, "Amazing! You're almost done! Now use \nthe towel to dry your hands.", {
-        font: '20px Lucida Sans Unicode',
-        fill: '#00000'
-      });
+    step4 = false;
 
       washScene.time.addEvent({
-      delay: 9000,
+      delay: 7000,
       callback: ()=>{
 
-        text.destroy();
+        let text = washScene.add.text(450, 36, "Yay! I knew you could do it! Now it's time to \ncollect supplies for your friends birthday \nbut beware, you never know what creatures \ncould be lurking on the way.", {
+          font: '18px Lucida Sans Unicode',
+          fill: '#00000'
+        });
+
+        var back_button = washScene.add.sprite(700, 110, 'back_button').setScale(0.1);
+
+        back_button.setInteractive();
+
+        back_button.on('pointerdown', function(){
+            washScene.scene.start('Game');
+
+        });
       },
       loop: false
       })
 
-  },
-  loop: false
-  })
-}
-
-function finalPrompt(){
-  washScene.time.addEvent({
-  delay: 51000,
-  callback: ()=>{
-
-      let text = washScene.add.text(450, 36, "Yay! I knew you could do it! Now it's time to \ncollect supplies for your friends birthday \nbut beware, you never know what creatures \ncould be lurking on the way.", {
-        font: '18px Lucida Sans Unicode',
-        fill: '#00000'
-      });
-
-      var back_button = washScene.add.sprite(700, 110, 'back_button').setScale(0.1);
-
-      back_button.setInteractive();
-
-      back_button.on('pointerdown', function(){
-          washScene.scene.start('Game');
-
-      });
-  },
-  loop: false
-  })
+  }
 }

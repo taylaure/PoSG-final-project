@@ -11,7 +11,7 @@ let config = {
             debug: false
         }
     },
-    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene],
+    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene, winningScene],
     backgroundColor: '#154A1E'
 };
 
@@ -297,6 +297,7 @@ function onHitGoal() {
   }
   else if(!balloon_touched) {
     console.log('You have not find all the presents for your friend yet!');
+    gameScene.scene.start('Winning');
   }
 };
 

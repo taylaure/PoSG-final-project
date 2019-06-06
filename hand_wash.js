@@ -89,7 +89,7 @@ washScene.update = function(time, delta){
 
 function gameIntro(){
 
-  let intro = washScene.add.text(450, 36, "Welcome! Before going to your friends \nbirthday party. It's important that you \nknow how to wash your hands.", {
+  let intro = washScene.add.text(450, 36, "Welcome! Let's start by learning how to \nwash our hands.", {
     font: '20px Lucida Sans Unicode',
     fill: '#00000'
   });
@@ -100,7 +100,7 @@ function gameIntro(){
 
     intro.destroy();
 
-    let line2 = washScene.add.text(450, 36, "First, use the sink to wet your hands!", {
+    let line2 = washScene.add.text(450, 36, "First, use the sink to wet your hands by \nclicking and dragging them to the faucet", {
       font: '20px Lucida Sans Unicode',
       fill: '#00000'
     });

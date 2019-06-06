@@ -11,11 +11,7 @@ let config = {
             debug: false
         }
     },
-<<<<<<< HEAD
     scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene, endScene],
-=======
-    scene: [loadingScene, homeScene, gameScene, washScene, washAnimationScene, minigameScene, welcomeScene, winningScene],
->>>>>>> b6d3b30cf88b9d55bcf6fb2c4e8dc03d6fe1fbe7
     backgroundColor: '#154A1E'
 };
 

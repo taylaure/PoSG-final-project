@@ -40,7 +40,7 @@ homeScene.create = function() {
     startText.on('pointerdown', function(){
       var click = this.sound.add('click');
       click.play();
-      this.scene.start('Game');
+      this.scene.start('Welcome');
     }, this);
     // create the start buttons background
     let textBg = this.add.graphics();

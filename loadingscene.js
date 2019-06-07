@@ -30,7 +30,7 @@ loadingScene.preload = function() {
   this.load.image('no_button', 'assets/no.png');
   this.load.audio('meow', 'assets/meow.wav');
   this.load.audio('magic', 'assets/magic.wav');
-  this.load.audio('flush', 'assets/flush1.wav');
+  //this.load.audio('flush', 'assets/flush1.wav');
   this.load.audio('click', 'assets/click.wav');
   this.load.audio('cheer', 'assets/cheer.wav');
 }

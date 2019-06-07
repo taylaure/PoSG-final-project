@@ -252,7 +252,7 @@ function onHitBacteria1() {
           var yes_button = this.add.sprite(100, 80, 'yes_button').setScale(0.2);
           var no_button = this.add.sprite(230, 80, 'no_button').setScale(0.2);
           //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
-          let text1 = this.add.text(-320, -100, 'Looks like some hand sanitizers! Do you want to use them now?', {
+          let text1 = this.add.text(-320, -100, 'Looks like you found some hand sanitizers! Do you want to use them now?', {
               font: '24px Lucida Sans Unicode',
               fill: '#ffffff',
               wordWrap: {width: 580, useAdvanceWrap: true}
@@ -354,7 +354,7 @@ function onHitBacteria2() {
           var yes_button = this.add.sprite(100, 80, 'yes_button').setScale(0.2);
           var no_button = this.add.sprite(230, 80, 'no_button').setScale(0.2);
           //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
-          let text1 = this.add.text(-320, -100, 'Looks like some hand sanitizers! Do you want to use them now?', {
+          let text1 = this.add.text(-320, -100, 'Looks like you found some hand sanitizers! Do you want to use them now?', {
               font: '24px Lucida Sans Unicode',
               fill: '#ffffff',
               wordWrap: {width: 580, useAdvanceWrap: true}
@@ -410,7 +410,7 @@ function goHomeMsg() {
   var back = gameScene.add.sprite(0, 0, 'msgBox');
   var back_button = gameScene.add.sprite(280, 80, 'back_button').setScale(0.2);
   //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
-  let go_home_text1 = gameScene.add.text(-320, -60, 'Uh oh! You have not clean up your hands yet!', {
+  let go_home_text1 = gameScene.add.text(-320, -60, 'Uh oh! You have not cleaned up your hands yet!', {
       font: '30px Lucida Sans Unicode',
       fill: '#ffffff'
   });

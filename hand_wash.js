@@ -10,6 +10,8 @@ washScene.init = function(){
 };
 
 washScene.preload = function(){
+  //preload all images in game Scene
+  
   console.log('preload: entered washing game');
   this.load.image('soap', 'assets/soap2.png');
   this.load.image('towel', 'assets/towel.png');
@@ -28,7 +30,7 @@ washScene.preload = function(){
 
 washScene.create = function(){
 
-
+  //game object delclaration
   console.log('create: entered washing game');
   let background = this.add.sprite(0,0, 'bath_background');
 
@@ -61,7 +63,7 @@ washScene.create = function(){
 
   this.msg_box = this.add.sprite(610, 75, 'msgBox').setScale(.5);
 
-
+  //setting soap and hand objects draggable
   this.input.setDraggable(this.soap);
 
   this.input.setDraggable(this.hands);
@@ -73,7 +75,8 @@ washScene.create = function(){
 
     });
 
-  gameIntro();
+    //beginning instructions for the game
+    gameIntro();
 
 
 
@@ -81,7 +84,7 @@ washScene.create = function(){
 
 washScene.update = function(time, delta){
 
-
+    //subsequet actions for the game
     gameUpdate();
 
 
@@ -118,14 +121,18 @@ function gameIntro(){
 
 }
 
+//instructions based on interactivity of objects
 function gameUpdate(){
   let handsRect = washScene.hands.getBounds();
   let contRect = washScene.hit_box.getBounds();
   let soapRect = washScene.soap.getBounds();
   let towelRect = washScene.towel.getBounds();
 
+  //check if hands and hit box are touching
   if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect) && step1 === true) {
 
+
+      //play water sound
       console.log('water sound playing');
       washScene.waterSound.play();
 
@@ -159,9 +166,11 @@ function gameUpdate(){
 
   }
 
+  //check if hands and soap are touching
   if(Phaser.Geom.Intersects.RectangleToRectangle(handsRect, soapRect) && step2){
-      console.log('bubble sound playing');
+        console.log('bubble sound playing');
 
+        //play bubble sound
         washScene.bubbleSound.play();
 
         step2 = false;
@@ -197,8 +206,10 @@ function gameUpdate(){
 
   }
 
+  //check if hands and hit box are touching
   if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, contRect) && step3 === true) {
 
+      //play water sound
       console.log('water sound playing');
       washScene.waterSound.play();
 
@@ -231,6 +242,8 @@ function gameUpdate(){
 
   }
 
+
+  //check if towel and hands are touching
   if (Phaser.Geom.Intersects.RectangleToRectangle(handsRect, towelRect) && step4 === true) {
 
     step4 = false;

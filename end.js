@@ -31,5 +31,4 @@ endScene.create = function() {
     font: '30px Impact',
     fill: '#ffffff'
   });
-  //this.endText.setOrigin(0.5, 0.5);
 };

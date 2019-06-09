@@ -109,7 +109,6 @@ function onHitBlock (ball, block)
     if (!hasActiveStars)
     {
         gameOver = true;
-        //makeBlocks(3,this.blocks);
     }
 };
 

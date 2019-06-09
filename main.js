@@ -16,7 +16,6 @@ let config = {
 };
 
 let game = new Phaser.Game(config);
-// Bacteria event
 let bacteria_touched = false;
 let home_count = 0;
 let balloon_touched = false;
@@ -37,7 +36,7 @@ gameScene.create = function() {
   //  Input Events
   let cursors = this.input.keyboard.createCursorKeys();
 
-  // Making bush
+  // Making border mountains
   this.maze = this.physics.add.staticGroup();
   this.maze.create(600, 585, 'mountains').setScale(1.5).refreshBody();
   // Plants near start
@@ -49,7 +48,6 @@ gameScene.create = function() {
   this.maze.create(300, 50, 'flower_tree').setScale(0.5).refreshBody();
   this.maze.create(260, 80, 'flower_tree').setScale(0.4).refreshBody();
   this.maze.create(300, 150, 'flower_bush').setScale(0.2).refreshBody();
-
   this.maze.create(600, 400, 'bush').setScale(0.3).refreshBody();
   // Trees near goal
   this.maze.create(550, 50, 'white_tree').setScale(0.2).refreshBody();
@@ -103,10 +101,6 @@ gameScene.create = function() {
 
   this.player = new Player(this, 100, config.height - 100, cursors);
 
-
-  //this.physics.add.collider(this.player, this.small_bush);
-  //this.physics.add.collider(this.small_bush, this.maze);
-
   this.physics.add.collider(this.player, this.maze);
   this.physics.add.collider(this.player, this.balloon, onHitBalloon, null, this);
   this.physics.add.overlap(this.player, this.house, onHitHouse, null, this);
@@ -123,8 +117,9 @@ gameScene.update = function(time, delta) {
 };
 
 function onHitBalloon () {
-  //this.scene.pause('Game');
+  // Pause player movement
   this.player.setVelocity(0, 0);
+
   if(bacteria_touched) {
     if(this.msgBox) {
       return;
@@ -147,7 +142,6 @@ function onHitBalloon () {
     this.msgBox = this.add.container(400, 300);
     var back = this.add.sprite(0, 0, 'msgBox');
     var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
-    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
     let go_home_text1 = this.add.text(-320, -30, 'Hooray! You found the balloons!', {
         font: '30px Impact',
         fill: '#ffffff'
@@ -164,12 +158,7 @@ function onHitBalloon () {
         click.play();
         this.msgBox.destroy();
         this.msgBox = undefined;
-        //this.scene.resume('Game');
     }, this);
-
-    //console.log('Minigame will start now');
-    //this.scene.launch('Wash');
-    //this.scene.pause();
   }
 };
 
@@ -183,7 +172,6 @@ function onHitHouse () {
 };
 
 function onHitBacteria1() {
-  //this.scene.pause('Game')
   this.player.setVelocity(0, 0);;
   if(!bacteria_touched) {
     if(this.msgBox) {
@@ -198,7 +186,6 @@ function onHitBacteria1() {
     var back = this.add.sprite(0, 0, 'msgBox');
     var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
     var cat = this.add.sprite(270, -30, 'surprised_cat').setScale(0.2);
-    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
     let bac_type = this.add.text(-320, -100, 'Oh no! You’ve picked up a pasteurella bacterium from a stray cat!', {
         font: '20px Lucida Sans Unicode',
         fill: '#ffffff',
@@ -251,7 +238,6 @@ function onHitBacteria1() {
           var back = this.add.sprite(0, 0, 'msgBox');
           var yes_button = this.add.sprite(100, 80, 'yes_button').setScale(0.2);
           var no_button = this.add.sprite(230, 80, 'no_button').setScale(0.2);
-          //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
           let text1 = this.add.text(-320, -100, 'Looks like you found some hand sanitizers! Do you want to use them now?', {
               font: '24px Lucida Sans Unicode',
               fill: '#ffffff',
@@ -287,7 +273,6 @@ function onHitBacteria1() {
 };
 
 function onHitBacteria2() {
-  //this.scene.pause('Game');
   this.player.setVelocity(0, 0);
   if(!bacteria_touched) {
     if(this.msgBox) {
@@ -302,7 +287,6 @@ function onHitBacteria2() {
     var back = this.add.sprite(0, 0, 'msgBox');
     var back_button = this.add.sprite(280, 80, 'back_button').setScale(0.2);
     var place = this.add.sprite(270, -30, 'toilet').setScale(0.2);
-    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
     let bac_type = this.add.text(-320, -100, 'Oh no! You’ve picked up a clostridioides from a public toilet!', {
         font: '20px Lucida Sans Unicode',
         fill: '#ffffff',
@@ -324,7 +308,6 @@ function onHitBacteria2() {
       fill: '#FF5554',
       wordWrap: {width: 550, useAdvanceWrap: true}
     });
-
 
     this.msgBox.add(back);
     this.msgBox.add(place);
@@ -353,7 +336,6 @@ function onHitBacteria2() {
           var back = this.add.sprite(0, 0, 'msgBox');
           var yes_button = this.add.sprite(100, 80, 'yes_button').setScale(0.2);
           var no_button = this.add.sprite(230, 80, 'no_button').setScale(0.2);
-          //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
           let text1 = this.add.text(-320, -100, 'Looks like you found some hand sanitizers! Do you want to use them now?', {
               font: '24px Lucida Sans Unicode',
               fill: '#ffffff',
@@ -409,7 +391,6 @@ function goHomeMsg() {
   gameScene.msgBox = gameScene.add.container(400, 300);
   var back = gameScene.add.sprite(0, 0, 'msgBox');
   var back_button = gameScene.add.sprite(280, 80, 'back_button').setScale(0.2);
-  //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
   let go_home_text1 = gameScene.add.text(-320, -60, 'Uh oh! You have not cleaned up your hands yet!', {
       font: '30px Lucida Sans Unicode',
       fill: '#ffffff'
@@ -430,7 +411,6 @@ function goHomeMsg() {
       click.play();
       gameScene.msgBox.destroy();
       gameScene.msgBox = undefined;
-      //this.scene.resume('Game');
   }, gameScene);
 };
 
@@ -450,7 +430,6 @@ function onHitSani() {
     gameScene.msgBox = gameScene.add.container(400, 300);
     var back = gameScene.add.sprite(0, 0, 'msgBox');
     var go_button = gameScene.add.sprite(280, 80, 'go_button').setScale(0.2);
-    //var go_home_text = this.add.text(0, 0, 'Uh oh! You have not clean up your hands yet! Go back home to get them cleaned up!');
     let text1 = gameScene.add.text(-320, -100, 'Woah! You have found some hand sanitizer! Clear all the bacteria for a chance to add the hand sanitizer to your inventory. If you win, you can use it to ward off low-level bacteria without returning home! Use the left/right arrow button to control the paddle.', {
         font: '24px Lucida Sans Unicode',
         fill: '#ffffff',
